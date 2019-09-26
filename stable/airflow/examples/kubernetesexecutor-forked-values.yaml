@@ -1,0 +1,36 @@
+airflow:
+  fernetKey: "dmxhm7ZCS7vz5rivi33JOuAUtG_wNyt2VvLmnrLc1IQ="
+  executor: Kubernetes
+  image:
+    repository: puckel/docker-airflow
+    tag: 1.10.4
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    externalPort: 8080
+  webReplicas: 1
+  config: 
+    AIRFLOW__KUBERNETES__WORKER_CONTAINER_REPOSITORY: puckel/docker-airflow
+    AIRFLOW__KUBERNETES__WORKER_CONTAINER_TAG: 1.10.4
+    AIRFLOW__KUBERNETES__WORKER_CONTAINER_IMAGE_PULL_POLICY: IfNotPresent
+    AIRFLOW__KUBERNETES__DELETE_WORKER_PODS: True
+    AIRFLOW__KUBERNETES__DAGS_IN_IMAGE: False
+    AIRFLOW__CORE__LOAD_EXAMPLES: True
+workers:
+  enabled: false
+persistence:
+  enabled: true
+  storageClass: efs
+  accessMode: ReadWriteMany
+  size: 1Gi
+logsPersistence:
+  enabled: true
+  storageClass: efs
+  accessMode: ReadWriteMany
+  size: 1Gi
+dags:
+  path: /usr/local/airflow/dags
+logs:
+  path: /usr/local/airflow/logs
+redis:
+  enabled: false

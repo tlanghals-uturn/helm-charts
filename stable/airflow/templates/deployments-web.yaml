@@ -139,6 +139,9 @@ spec:
             - >
               echo 'waiting {{ .Values.web.initialStartupDelay }}s...' &&
               sleep {{ .Values.web.initialStartupDelay }} &&
+              {{- if and .Values.airflow.executor (eq .Values.airflow.executor "Kubernetes") }}
+              pip install --user apache-airflow[kubernetes] &&
+              {{- end}}
               mkdir -p /usr/local/airflow/.local/bin &&
               export PATH=/usr/local/airflow/.local/bin:$PATH &&
               echo 'executing webserver...' &&

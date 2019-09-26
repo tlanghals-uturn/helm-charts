@@ -162,6 +162,9 @@ spec:
             - >
               echo 'waiting 10s...' &&
               sleep 10 &&
+              {{- if and .Values.airflow.executor (eq .Values.airflow.executor "Kubernetes") }}
+              pip install --user apache-airflow[kubernetes] &&
+              {{- end}}
               mkdir -p /usr/local/airflow/.local/bin &&
               export PATH=/usr/local/airflow/.local/bin:$PATH &&
               {{- if .Values.airflow.initdb }}
