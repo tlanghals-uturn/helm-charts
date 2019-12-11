@@ -6,10 +6,10 @@ TAG=${2:-latest}
 rm -rf .tmp/
 
 mkdir -p .tmp && cd .tmp
-git clone --single-branch --branch feature/airflow-1.10.5 https://github.com/maxbrunet/docker-airflow.git
+git clone https://github.com/puckel/docker-airflow.git
 cd docker-airflow
 
-docker build --build-arg AIRFLOW_DEPS="kubernetes" --tag=${IMAGE}:${TAG} .
+docker build --build-arg AIRFLOW_DEPS="kubernetes,s3" --tag=${IMAGE}:${TAG} .
 
 cd ../..
 rm -rf .tmp/
